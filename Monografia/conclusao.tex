@@ -1,0 +1,22 @@
+\chapter{Conclusão}
+\label{c.conclusao}
+
+Este estudo fez uma análise sobre a utilização de técnicas da área de \textit{Machine Learning} para a detecção de \textit{Botnets} baseadas no protocolo IRC em uma rede, através da análise fluxos bidirecionais. Estudos deste tipo se fazem cada vez mais relevante tendo em vista o crescimento do uso de aparelhos conectados em rede que podem ser integrados às \textit{botnets}, aumentando ainda mais o poder de seus ataques.
+
+Sendo assim, é possível afirmar que o presente estudo cumpriu seus objetivos ao estudar a aplicação e eficiência de vários algoritmos da área, além de explorar a utilização de características utilizadas em estudos passados e ainda explorar novas possibilidades de uso. 
+
+Com base nos resultados, é possível afirmar que os classificadores testados foram bem sucedidos em suas tarefas, obtendo altos níveis de acurácia. Dentre eles destacam-se os métodos baseados em Árvores, que obtiveram os melhores resultados, seguidos pelos métodos de \textit{Support Vector Machines}, e por último pelos métodos de \textit{Naive Bayes}.
+
+Com relação às duas abordagens de utilização de características, é possível observar que a utilização do RFE para seleção de características impactou diretamente na melhoria da acurácia dos modelos probabilísticos de Naive Bayes, no entanto para os outros métodos os resultados foram parecidos. Porém, a utilização do RFE ainda apresenta menor custo computacional, o que a torna mais efetiva.
+
+Já para o número de características, percebe-se que nenhum deles apresentou uma diferença muito grande com exceção do método de Florestas Aleatórias que acabou utilizando todas as características presentes no conjunto, e assim utilizando 34 características a mais que na abordagem de Força Bruta. Para a primeira abordagem, utilizando 11 características foi obtida uma média de 6,5 características utilizadas por classificador, enquanto para a segunda utilizando 39 características observou-se uma média de 16,8 características.
+
+As características que foram utilizadas nos estudos anteriores se fizeram muito presente nas encontradas pelo RFE, com destaque para algumas que se destacaram em ambas as abordagem: Porcentagem de Pacotes Enviados, IOPR, Média de tamanho do Payload, e o tempo de chegada entre pacotes médio, ou IAT médio. 
+
+Observa-se ainda que no que tange a abordagem do RFE, de maneira geral características ligadas a IAT foram amplamente usadas por quase todos os classificadores, enquanto as características de tamanho de fluxo, como total de bytes, não obtiveram muita representatividade em ambas as abordagens, assim como a característica duração do fluxo.
+
+Por fim, foi possível observar o impacto que a otimização de hiper-parâmetros pode ter no desempenho do SVM, tendo em vista que a troca do valor de seu parâmetro C levou a um considerável aumento em sua acurácia. Além disso, também demonstrou que o Sigmoidal se saiu significativamente pior do que o Linear e o RBF para este tipo de problema.
+
+\section{Trabalhos Futuros}
+
+Como trabalhos futuros baseados neste estudo, têm-se a exploração de outras características possíveis de serem utilizadas na área, avaliar a eficiência dos métodos e características descritos para outros protocolos de \textit{Botnet} centralizadas como o HTTP que vem crescendo em uso recentemente ou descentralizadas que utilizam comunicação P2P, implementação de outras técnicas da área, como Redes Neurais Artificiais ou algoritmos de  ML não-supervisionado para encontrar padrões na rede, trabalhar com outras bases de dados, que apresentem maior volume de pacotes, e implementação de um sistema de monitoramento que analise os fluxos em tempo real.

@@ -1,0 +1,368 @@
+% --------------------------------------------------------
+% DEFINIÇÕES DO DOCUMENTO
+% --------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em verso e anverso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	]{abntex2}
+
+% --------------------------------------------------------
+% PACOTES
+% --------------------------------------------------------
+
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{lipsum}				% para geração de dummy text
+\usepackage[brazilian,hyperpageref]{}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[br]{nicealgo}       % Pacote para criação de algoritmos
+\usepackage{customizacoes}      % Pacote de customizações do abntex2
+
+
+% --------------------------------------------------------
+% CONFIGURAÇÕES DE PACOTES
+% --------------------------------------------------------
+
+% Configurações do pacote backref
+\renewcommand{\familydefault}{\sfdefault}
+% Usado sem a opção hyperpageref de backref
+% \renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+% \renewcommand{\backref}{}
+% Define os textos da citação
+% \renewcommand*{\backrefalt}[4]{
+	% \ifcase #1 %
+		% Nenhuma citação no texto.%
+	% \or
+		% Citado na página #2.%
+	% \else
+		% Citado #1 vezes nas páginas #2.%
+	% \fi}%
+
+
+% --------------------------------------------------------
+% INFORMAÇÕES DE DADOS PARA CAPA E FOLHA DE ROSTO
+% --------------------------------------------------------
+
+\titulo{Utilização de técnicas de Machine Learning para Detecção de Botnets}
+\autor{Luis Felipe Bueno da Silva}
+\local{Bauru}
+\data{2018}
+\orientador{Prof. Dr. Kelton Augusto Pontara da Costa}
+\instituicao{%
+  Universidade Estadual Paulista ``Júlio de Mesquita Filho''
+  \par
+  Faculdade de Ciências
+  \par
+  Ciência da Computação}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+\preambulo{Trabalho de Conclusão de Curso do Curso de Ciência da Computação da Universidade Estadual Paulista ``Júlio de Mesquita Filho'', Faculdade de Ciências, Campus Bauru.}
+
+
+% --------------------------------------------------------
+% CONFIGURAÇÕES PARA O PDF FINAL
+% --------------------------------------------------------
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+
+
+% --------------------------------------------------------
+% ESPAÇAMENTOS ENTRE LINHAS E PARÁGRAFOS
+% --------------------------------------------------------
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}
+
+
+% --------------------------------------------------------
+% COMPILANDO O ÍNDICE
+% --------------------------------------------------------
+
+\makeindex
+
+
+% --------------------------------------------------------
+% INÍCIO DO DOCUMENTO
+% --------------------------------------------------------
+
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+
+% --------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% --------------------------------------------------------
+
+% Capa
+\imprimircapa
+
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+\imprimirfolhaderosto*
+
+% Inserir a ficha bibliografica
+\begin{fichacatalografica}
+	\sffamily
+	\vspace*{\fill}					% Posição vertical
+	\begin{center}					% Minipage Centralizado
+	\fbox{\begin{minipage}[c][8cm]{15.5cm}		% Largura
+	\small
+	\imprimirautor
+	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+	\imprimirlocal, \imprimirdata-
+	\hspace{0.5cm} \pageref{LastPage} p. : il. (algumas color.) ; 30 cm.\\
+	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+	\hspace{0.5cm}
+	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+	\imprimirdata.}\\
+	\hspace{0.5cm}
+		1. Botnet
+		2. Machine Learning
+		3. Inteligência Artificial
+		4. Python
+	\end{minipage}}
+	\end{center}
+\end{fichacatalografica}
+
+% Inserir folha de aprovação
+\begin{folhadeaprovacao}
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+        \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+   \end{center}
+   \center Banca Examinadora
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+   \assinatura{\textbf{Profª. Drª. Simone das Graças Domingues Prado} \\ Convidado 1}
+   \assinatura{\textbf{Professor} \\ Convidado 2}
+   \begin{center}
+    \vspace*{0.5cm}
+    \par
+    {Bauru, \_\_\_\_\_ de \_\_\_\_\_\_\_\_\_\_\_ de \_\_\_\_.}
+    \vspace*{1cm}
+  \end{center}
+\end{folhadeaprovacao}
+
+% % Dedicatória
+% \begin{dedicatoria}
+%   \vspace*{\fill}
+%   \centering
+%   \noindent
+%   \textit{Espaço destinado à dedicátoria do texto.} \vspace*{\fill}
+% \end{dedicatoria}
+
+% Agradecimentos
+\begin{agradecimentos}
+
+Espaço reservado para agradecimentos.
+
+\end{agradecimentos}
+
+% Epígrafe
+\begin{epigrafe}
+    \vspace*{\fill}
+	\begin{flushright}
+		"The ending isn’t any more important \linebreak \rightline{than any of the moments leading to it}" \newline 
+		(To the Moon) 
+	\end{flushright}
+\end{epigrafe}
+
+
+% --------------------------------------------------------
+% RESUMOS
+% --------------------------------------------------------
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+Esta monografia busca apresentar o estudo de métodos da área de \textit{Machine Learning} aplicados para a área de detecção de Botnets, redes de computadores comprometidos que são controlados por um invasor com o fim de executar atividades como ataques \textit{DDoS}, roubos de dados, entre outras ações maliciosas. Este trabalho é focado em estudar a eficiências dos classificadores mais utilizados em estudos anteriores da área, utilizando as técnicas de \textit{Naive Bayes}, \textit{Support Vector Machines}, Árvores de Decisão, Florestas Aleatórias, \textit{AdaBoost}, e aplicar técnicas para seleção de características de rede mais relevantes na tarefa de seleção dos tráfegos de Botnet em um ambiente de rede, através de uma abordagem de força bruta e uma abordagem utilizando o algoritmo de seleção de características \textit{Recursive Feature Elimination}. Busca também estudar a relevância de técnicas de otimização de hiper-parâmetros dos estimadores, com o objetivo de aumentar a acurácia. Por fim, são tiradas conclusões com base nos resultados obtidos no estudo. \linebreak
+\textbf{Palavras-chave:} Botnet, Machine Learning, Inteligência Artificial, Python.
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+This monograph presents the study of Machine Learning methods applied to the detection of Botnets, compromised computer networks that are controlled by an attacker in order to perform malicious activities such as DDoS attacks, data theft, among others. This work is focused on studying the efficiency of the most used classifiers in previous studies of the aream with the application of Naive Bayes, Support Vector Machines, Decision Trees, Random Forests and AdaBoost models, and apply techniques to select the most relevant network characteristics in the task of selecting botnet traffic in a network environment, through a brute-force approach and using the Recursive Feature Elimination algorithm. It also seeks to study the relevance of optimization techniques on estimators hyper-parameters, in order to increase model accuracy. Finally, conclusions are drawn based on the results obtained in the study. \linebreak
+\textbf{Keywords:} Botnet, Machine Learning, Artificial Intelligence, Python.
+ \end{otherlanguage*}
+\end{resumo}
+
+
+% --------------------------------------------------------
+% LISTA DE ILUSTRAÇÕES
+% --------------------------------------------------------
+
+% inserir lista de ilustrações
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+
+% --------------------------------------------------------
+% LISTA DE TABELAS
+% --------------------------------------------------------
+
+% inserir lista de tabelas
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+
+% --------------------------------------------------------
+% LISTA DE ABREVIATURAS E SIGLAS
+% --------------------------------------------------------
+
+% inserir lista de abreviaturas e siglas
+\begin{siglas}
+  \item [CSV] \textit{Comma-separated Values} 
+  \item [PCAP] \textit{Packet Capture}
+  \item[SVM] \textit{Support Vector Machines}
+  \item[RFE] \textit{Recursive Feature Elimination}
+  \item[IA] Inteligência Artificial
+  \item[ML] \textit{Machine Learning}
+  \item[CV] \textit{Cross Validation}
+  \item[NB] \textit{Naive Bayes}
+  \item[UDP] \textit{User Datagram Protocol}
+  \item[TCP] \textit{Transmission Control Protocol}
+  \item[IAT] \textit{Inter-Arrival Time}
+  \item[P2P] \textit {Peer to Peer}
+  \item[C\&C] Comando e Controle
+  \item[HTTP] \textit{Hypertext Transfer Protocol}
+  \item[HTTPS] \textit{Hypertext Transfer Protocol Secure}
+  \item[IRC] \textit{Internet Relay Chat}
+\end{siglas}
+
+% --------------------------------------------------------
+% LISTA DE SÍMBOLOS
+% --------------------------------------------------------
+
+% inserir lista de símbolos
+\begin{simbolos}
+  \item[$ \gamma $] Letra grega Gama
+\end{simbolos}
+
+
+% --------------------------------------------------------
+% SUMÁRIO
+% --------------------------------------------------------
+
+% inserir o sumario
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+
+% --------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% --------------------------------------------------------
+
+\pagestyle{simple}
+
+% Arquivos .tex do texto, podendo ser escritos em um único arquivo ou divididos da forma desejada
+\input{introducao.tex}
+\input{fundamentacao.tex}
+\input{metodologia.tex}
+\input{desenvolvimento.tex}
+\input{resultados.tex}
+\input{conclusao.tex}
+% --------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% --------------------------------------------------------
+
+\postextual
+
+
+% --------------------------------------------------------
+% REFERÊNCIAS BIBLIOGRÁFICAS
+% --------------------------------------------------------
+
+\bibliography{referencias}
+
+
+% --------------------------------------------------------
+% GLOSSÁRIO
+% --------------------------------------------------------
+
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%\glossary
+
+
+% --------------------------------------------------------
+% APÊNDICES
+% --------------------------------------------------------
+
+% Inicia os apêndices
+%\begin{apendicesenv}
+% Imprime uma página indicando o início dos apêndices
+%\partapendices
+% Criação do apêndice
+%\end{apendicesenv}
+
+
+% --------------------------------------------------------
+% ÍNDICE REMISSIVO
+% --------------------------------------------------------
+
+\printindex
+
+
+% --------------------------------------------------------
+% FINAL DO DOCUMENTO
+% --------------------------------------------------------
+
+\end{document}
