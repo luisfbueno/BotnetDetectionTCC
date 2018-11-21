@@ -3,7 +3,7 @@
 
 \section{Base de dados}
 
-Para este trabalho foi utilizada uma base de dados fornecida pela \textit{University of New Brunswick} \cite{unbdataset}. Esta base vem sendo utilizada em vários estudos recentes da área, como \cite{iscx1} e \cite{rna1}, e portanto sua utilização é de extrema relevância. Foram fornecidos três arquivos no formato PCAP, sendo um voltado para a fase de treinamento e dois para testes. No entanto, os arquivos de teste apresentaram problemas, com ambos não podendo ser processados pelo programa.
+Para o desenvolvimento desta monografia foi utilizada uma base de dados fornecida pela \textit{University of New Brunswick} \cite{unbdataset}. Esta base vem sendo utilizada em vários estudos recentes da área, como \cite{iscx1} e \cite{rna1}, e portanto sua utilização é de extrema relevância. Foram fornecidos três arquivos no formato PCAP, sendo um voltado para a fase de treinamento e dois para testes. No entanto, os arquivos de teste apresentaram problemas, com ambos não podendo ser processados pelo programa.
 
 Um deles apresentava problemas de desordenamento dos pacotes, que ao tentar ser resolvido levou a uma descaracterização dos dados, como por exemplo valores de duração negativos, algo que não é possível por se tratar de uma medida de tempo. Já o segundo apresentou problemas de corrompimento, que também impediram seu processamento.
 
@@ -15,14 +15,6 @@ Sendo assim, todo o desenvolvimento deste trabalho, assim como seus resultados, 
 Para que os estimadores pudessem trabalhar no conjunto de dados, foi preciso primeiro passar os arquivos de pacotes por um gerador de fluxos bidirecionais, um programa capaz de analisar todos os pacotes e extrair características dos fluxos de rede presentes nele.
 
 Para este fim, foi utilizado o programa \textit{flowtbag}, uma ferramenta \textit{open-source} desenvolvida na linguagem \textit{Go}, disponível no \textit{GitHub} \cite{flowtbag}. A interface de utilização do programa se dá através da linha de comando, onde são passados o caminho para o arquivo de pacotes a ser analisado, e o caminho para onde o arquivo final, no formato CSV, deve ser salvo.
-
-\begin{figure}[h]
-\caption{\small Gerando arquivo de fluxos bidirecionais com a biblioteca \textit{flowtbag}.}
-\centering
-\includegraphics[scale=0.50]{figs/exemplo-flowtbag.png}
-\label{f.exemplo-flowtbag}
-\legend{\small Fonte: Elaborada pelo autor.}
-\end{figure}
 
 O arquivo CSV que o programa cria contém uma tabela onde as linhas representam cada fluxo de rede, e as colunas representam as características extraídas. Ao todo são 44 características,sendo que as cinco primeiras são as que definem um fluxo: IP de origem, IP de destino, Porta de origem, Porta de destino, e Protocolo.
 
@@ -47,7 +39,7 @@ Os fluxos de protocolo TCP eram representados pelo número 6, enquanto o número
 
 Depois de eliminado os fluxos que não iriam ser utilizados, foi feita a rotulação dos dados, que consiste em atribuir para cada uma das linhas da tabela um valor que indica se aquele fluxo é de botnet ou não. Para essa tarefa, foram utilizados dois recursos: uma lista de IP's fornecida juntamente com a base de dados que informa o IP usado pelas botnets, e uma tabela pertencente ao estudo desenvolvido em conjunto com a base, que informa quais são as botnets presentes em cada conjunto.
 
-Com essas informações, foi possível então desenvolver um método que iterasse por toda a tabela verificando se os IPs dos fluxos correspondiam aqueles dos ataques. Em caso positivo, era atribuído o valor 1, e 0 caso contrário.
+Com essas informações, foi possível então desenvolver um método que iterasse por toda a tabela verificando se os IPs dos fluxos correspondiam aqueles dos ataques. Em caso positivo, era atribuído o valor 1, e 0 caso contrário, como visto na figura \ref{f.rotulacao-dados}.
 
 \begin{figure}[h]
 \caption{\small Rotulação dos fluxos.}
@@ -63,9 +55,10 @@ Por fim, foi observado que a distribuição de fluxos por classe estava desbalan
 
 Foi necessário também criar algumas colunas de dados que não foram geradas automaticamente pelo programa. Como citado na seção anterior, o programa gerador divide as características em dois tipos, \textit{forward} e \textit{backward}, o que permite uma maior flexibilidade ao se trabalhar com os dados, porém exige que alguns cálculos sejam feitos para se gerar certas características mais gerais.
 
-Foi preciso então, criar métodos capazes de trabalhar com os valores presentes para gerar alguns dados que foram utilizados em pesquisas anteriores da área. A tabela 1 mostra quais são essas características e como elas foram calculadas:
+Foi preciso então, criar métodos capazes de trabalhar com os valores presentes para gerar alguns dados que foram utilizados em pesquisas anteriores da área. O Quadro \ref{t.caracteristicas-geradas} mostra quais são essas características e como elas foram calculadas:
 
-\begin{table}[ht]
+\begin{quadro}[ht]
+\caption{\small Exemplo de geração de colunas.}
 \centering
 \begin{tabular}{|c p{10cm}|l p{10cm}}
 \hline
@@ -83,14 +76,14 @@ Foi preciso então, criar métodos capazes de trabalhar com os valores presentes
 {\small IOPR} & {\small Razão entre a quantidade de pacotes na direção \textit{backward} sobre a quantidade da direção \textit{forward}}\\\hline
 {\small Média de tamanho de payload} & {\small Número de bytes total do fluxo menos a soma de bytes dos headers em ambas as direções, depois dividido pelo número de pacotes}\\\hline
 \end{tabular}
-\caption{Fórmulas utilizadas para geração de características.}
+\legend{\small Fonte: Elaborada pelo autor.}
 \label{t.caracteristicas-geradas}
-\end{table}
+\end{quadro}
 
 \begin{figure}[h]
 \caption{\small Exemplo de geração de colunas.}
 \centering
-\includegraphics[scale=0.40]{figs/exemplo-geracao-coluna.png}
+\includegraphics[scale=0.60]{figs/exemplo-geracao-coluna.png}
 \label{f.exemplo-colunas}
 \legend{\small Fonte: Elaborada pelo autor.}
 \end{figure}
@@ -101,13 +94,13 @@ Por fim, foram removidas algumas colunas em que todos os valores eram 0, ou seja
 
 Junto com estas, também foram removidas colunas que não são relevantes para os algoritmos, IP/Porta de origem e de destino e protocolo, que apesar de terem sido muito úteis para a rotulação e filtragem, não serão utilizados para a tarefa de classificação, entre outras.
 
-\begin{figure}[h]
-\caption{\small Removendo colunas nulas e desnecessárias para a classificação do conjunto.}
-\centering
-\includegraphics[scale=0.40]{figs/drop-colunas.png}
-\label{f.drop-colunas}
-\legend{\small Fonte: Elaborada pelo autor.}
-\end{figure}
+% \begin{figure}[h]
+% \caption{\small Removendo colunas nulas e desnecessárias para a classificação do conjunto.}
+% \centering
+% \includegraphics[scale=0.40]{figs/drop-colunas.png}
+% \label{f.drop-colunas}
+% \legend{\small Fonte: Elaborada pelo autor.}
+% \end{figure}
 
 \section{Execução dos algoritmos}
 
@@ -116,7 +109,7 @@ Com os dados preparados, é possível então usá-los para treinar os algoritmos
 No entanto, não é viável executar os estimadores com todas, mas sim tentar encontrar um subconjunto destas que melhor caracterize o problema. Para este fim, foram aplicadas duas abordagens:
 
 \begin{itemize}
-    \item Busca de força bruta com base em dados de pesquisas anteriores: foram utilizadas somente as características presentes em trabalhos da área, e através de uma pesquisa de força bruta rodar todas as combinações delas com todos os algoritmos e assim desta maneira encontrar o melhor conjunto de características para cada classificador;
+    \item Busca de força bruta com base em dados de pesquisas anteriores: foram utilizadas somente as características presentes em trabalhos da área, e através de uma pesquisa de força bruta rodar todas as combinações delas com todos os algoritmos e assim encontrar o melhor conjunto de características para cada classificador;
 
     \item Busca utilizando um algoritmo específico de seleção de características: o Scikit possui vários algoritmos para seleção de características, que buscam encontrar dado um conjunto a melhor combinação. Para este trabalho, será utilizado o RFE no conjunto inteiro de dados, tanto os do gerador de fluxo quanto os criados com base em estudos anteriores. 
 \end{itemize}
@@ -126,7 +119,7 @@ No entanto, não é viável executar os estimadores com todas, mas sim tentar en
 
 Para essa primeira abordagem, a ideia era testar todas os subconjuntos possíveis de características com todos os estimadores, e verificar qual combinação de características seria melhor com cada um deles.
 
-Para obter as combinações de características do conjunto, foi utilizada a biblioteca \textit{itertools} do Python. A figura x mostra o processo de geração dos subconjuntos, aonde foi definido um numero mínimo de características por conjunto de 4. O resultado gerado é uma lista contendo todas as combinações. Ao fim do processo, foram geradas 1816 possibilidades.
+Para obter as combinações de características do conjunto, foi utilizada a biblioteca \textit{itertools} do Python. A figura \ref{f.exemplo-itertools} mostra o processo de geração dos subconjuntos, aonde foi definido um numero mínimo de características por conjunto de 4. O resultado gerado é uma lista contendo todas as combinações. Ao fim do processo, foram geradas 1816 possibilidades.
 
 \begin{figure}[h]
 \caption{\small Gerando combinações com a biblioteca \textit{itertools}.}
@@ -136,14 +129,14 @@ Para obter as combinações de características do conjunto, foi utilizada a bib
 \legend{\small Fonte: Elaborada pelo autor.}
 \end{figure}
 
-Depois, todas as combinações foram processadas por todos os estimadores, e as acurácias dos modelos obtidas. Foram criados vetores contendo instâncias de todos os estimadores a serem utilizados no trabalho, e depois este era percorrido, de maneira que a cada iteração o modelo fosse treinado e uma predição fosse obtida, salvando em uma tabela a acurácia e qual conjunto de dados foi usado. A figura x mostra o método utilizado para este processo. 
+Depois, todas as combinações foram processadas por todos os estimadores, e as acurácias dos modelos obtidas. Foram criados vetores contendo instâncias de todos os estimadores a serem utilizados no trabalho, e depois este era percorrido, de maneira que a cada iteração o modelo fosse treinado e uma predição fosse obtida, salvando em uma tabela a acurácia e qual conjunto de dados foi usado.
 
 Ao fim deste processo, foi possível filtrar os dados da tabela pelas maiores acurácias de cada estimador, e assim encontrar o subconjunto ótimo para este, assim como a acurácia obtida.
 
 \subsection{Utilizando o algoritmo Recursive Feature Elimination}
 \label{ss.dados-rfe}
 
-A ideia desta abordagem é utilizar o algoritmo RFE em todos o conjunto de dados, e dessa maneira observar quão eficaz são os dados utilizadas historicamente na área na tarefa de classificação, e também identificar se algumas das fornecidas pelo gerador são eficazes nesse processo, através do processo de observação das características escolhidas pelo algoritmo. 
+A ideia desta abordagem é utilizar o algoritmo RFE em todo o conjunto de dados, e dessa maneira observar quão eficaz são os dados utilizadas historicamente na área na tarefa de classificação, e também identificar se algumas das fornecidas pelo gerador são eficazes nesse processo, através do processo de observação das características escolhidas pelo algoritmo. 
 
 Além disso, outro ponto dessa abordagem é verificar se as características utilizadas nos estudos anteriores possuem grande representatividade dado todo o conjunto de características, ou seja, se elas serão escolhidas pelo algoritmo.
 
@@ -155,7 +148,7 @@ Depois de encontrado, é possível acessar tanto o estimador quanto as caracter�
 
 Obtidos os melhores conjuntos de características para todos os estimadores utilizando as duas abordagens, o último passo a ser feito nesta etapa é aplicar a técnica de \textit{Grid Search} para otimizar hiper-parâmetros no algoritmo de SVM, que como explicado anteriormente na seção \ref{c.fundamentacao} é muito depende da otimização de seus hiper-parâmetros para obter melhores resultados.
 
-O Scikit implementa a tecnica de \textit{Grid Search} em conjunto com o CV. A interface de utilização é muito parecida com a de um estimador normal, com a diferença de que deve ser passado também um dicionário com os parâmetros que serão testados e seus respectivos valores.
+O Scikit implementa a tecnica de \textit{Grid Search} em conjunto com o CV. A interface de utilização é muito parecida com a de um estimador normal, com a diferença de que deve ser passado também um dicionário com os parâmetros que serão testados e seus respectivos valores, como pode ser observado na figura \ref{f.exemplo-gridsearch}.
 
 \begin{figure}[h]
 \caption{\small Utilização do \textit{Grid Search} no Scikit.}

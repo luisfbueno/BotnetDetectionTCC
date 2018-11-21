@@ -3,19 +3,19 @@
 
 Uma das ameaças mais graves na área de cibersegurança é o uso coordenado de uma grande quantidade de máquinas para ataques, as chamadas \textit{botnets}. Uma \textit{botnet} é uma rede de computadores infectados, que sem o consentimento de seus donos, têm seus recursos utilizados por um atacante (denominado \textit{botmaster}) para a execução de atividades maliciosas \cite{miller2016role}. O \textit{botmaster} envia seus comandos de ataque para uma estrutura central, denominada Servidor de Comando e Controle, que é responsável por repassar a mensagem para todas as máquinas infectadas, e a partir desse momento as ações se iniciam.
 
-Existem várias classificações de \textit{botnets} de acordo com o protocolo utilizado pelo Servidor de C\&C, podendo ser HTTP, HTTPS, e IRC. Além disso, existem botnets que não utilizam um servidor de C\&C, trabalhando de maneira descentralizada através de protocolos P2P. 
+Existem várias classificações de \textit{botnets} de acordo com o protocolo utilizado pelo Servidor de C\&C, assim como existem botnets que não utilizam um servidor de C\&C, trabalhando de maneira descentralizada através de protocolos P2P. 
 
 Detectar o tráfego de \textit{botnets} é um grande desafio, pois como elas utilizam protocolos de aplicações já existentes, a detecção de sua presença na rede acaba sendo não-trivial, e a classificação do seu tráfego se torna ainda mais desafiadora devido ao uso de encriptação no conteúdo dos pacotes. \cite{lu2008botnets}
 	
 Enquanto \textit{honeypots} se provaram eficientes para se analisar o comportamento de um \textit{botnet} e suas características de funcionamento, eles não são capazes de detectá-las. Tendo isso em vista, foram desenvolvidas algumas técnicas para detecção de \textit{botnets} que podem ser classificadas como baseadas em técnicas de assinatura, anomalias, comportamento, ou rede \cite{asha2016analysis}.
 
-Apesar das \textit{botnets} já existirem a muito tempo, o problema se torna muito mais grave com o avanço de tecnologias de Internet das Coisas (IoT). Muitos dispositivos de IoT são feitos com baixa segurança, o que os torna vulneráveis a ataque e consequentemente podem ser usados em botnets. Em 2016 foi descoberta a Mirai, uma botnet que após a infecção buscava na rede por dispositivos IoT que pudessem ser facilmente invadidos e transformados em bots, devido suas fracas configurações de segurança \cite{kambourakis2017mirai}. 
+Apesar das \textit{botnets} já existirem a muito tempo, o problema se torna muito mais grave com o avanço de tecnologias de Internet das Coisas (\textit{Internet of Things}). Muitos dispositivos de IoT são feitos com baixa segurança, o que os torna vulneráveis a ataque e consequentemente podem ser usados em botnets. Em 2016 foi descoberta a Mirai, uma botnet que após a infecção buscava na rede por dispositivos IoT que pudessem ser facilmente invadidos e transformados em bots, devido suas fracas configurações de segurança \cite{kambourakis2017mirai}. 
 
 Depois de sua descoberta, o código fonte foi disponibilizado na Internet, o que levou ao surgimento de vários projetos variantes da Mirai. Estima-se que elas foram capazes de controlar aproximadamente meio milhão de dispositivos IoT e responsáveis por alguns dos maiores e mais catastróficos ataques DDoS. \cite{mliot}
 
-Tendo essa nova tendência de \textit{botnets} em vista, o estudo de métodos eficientes para detecção destas se faz necessário para que ataques deste tipo possam ser evitados. Este trabalho se propõe a desenvolver métodos que utilizem algoritmos de \textit{Machine Learning} para detectar \textit{botnets} através do comportamento da rede, com base em estudos anteriores da área. 
+Tendo essa nova tendência de \textit{botnets} em vista, o estudo de métodos eficientes para detecção destas se faz necessário para que ataques deste tipo possam ser evitados. Este trabalho se propôs a desenvolver métodos que utilizem algoritmos de \textit{Machine Learning} para detectar \textit{botnets} através do comportamento da rede, com base em estudos anteriores da área. 
 
-O foco do trabalho é o estudo da detecção de \textit{botnets} que utilizam o protocolo \textit{Internet Relay Chat}. Este protocolo de aplicação, popularmente utilizado por programas de grandes salas de bate-papo, é historicamente o protocolo predominante entre os Servidores de Comando e Controle das \textit{botnets}, apesar do seu uso ter diminuído nos últimos anos em favor do protocolo HTTP \cite{logregbot}. 
+O foco do trabalho foi o estudo da detecção de \textit{botnets} que utilizam o protocolo \textit{Internet Relay Chat}. Este protocolo de aplicação, popularmente utilizado por programas de grandes salas de bate-papo, é historicamente o protocolo predominante entre os Servidores de Comando e Controle das \textit{botnets}, apesar do seu uso ter diminuído nos últimos anos em favor do protocolo HTTP \cite{logregbot}. 
 
 \section{Objetivos}
 \label{i.objetivos}
@@ -23,14 +23,14 @@ O foco do trabalho é o estudo da detecção de \textit{botnets} que utilizam o 
 \subsection{Objetivo Geral}
 \label{i.objetivo-geral}
 
-O objetivo deste trabalho é aplicar algoritmos de \textit{Machine Learning} capazes de detectar a presença de \textit{botnets} em uma rede, assim como fazer um estudo de eficiência com base nos resultados obtidos.
+O objetivo deste trabalho foi aplicar algoritmos de \textit{Machine Learning} capazes de detectar a presença de \textit{botnets} em uma rede, assim como fazer um estudo de eficiência com base nos resultados obtidos.
 
 \subsection{Objetivos Específicos}
 \label{i.objetivos-especificos}
 
 \begin{alineas}
 
-\item Estudar algoritmos de \textit{Machine Learning} e definir quais serão implementados;
+\item Estudar algoritmos de \textit{Machine Learning} e definir quais foram implementados;
 
 \item Estudo sobre as características do tráfego de rede relevantes para detecção de \textit{botnets};
 
@@ -52,6 +52,6 @@ O Capítulo 3 apresenta as ferramentas utilizadas para o desenvolvimento do trab
 
 O Capítulo 4 relata todo o processo de desenvolvimento, desde a obtenção e tratamento de dados até a execução dos algoritmos.
 
-O Capítulo 5 apresenta todos os resultados obtidos ao final da fase de Desenvolvimento.
+O Capítulo 5 apresenta os resultados obtidos ao final da fase de Desenvolvimento.
 
 Por fim, o Capítulo 6 apresenta conclusões obtidas e sugestões de trabalhos futuros baseados nesta monografia.

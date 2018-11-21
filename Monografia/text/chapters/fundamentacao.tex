@@ -13,12 +13,12 @@ Já as descentralizadas não possuem uma estrutura central, utilizando ao invés
 
 Há ainda uma abordagem híbrida, que diferencia as máquinas infectadas entre servos e clientes, sendo as primeiras responsáveis por receber e enviar as mensagens e as últimas por executar os comandos recebidos. 
 
-A figura \ref{f.topologias} ilustra as diferentes topologias, aonde I representa uma \textit{botnet} centralizada, II descentralizada, e III uma aplicação híbrida.
+A Figura \ref{f.topologias} ilustra as diferentes topologias, aonde I representa uma \textit{botnet} centralizada, II descentralizada, e III uma aplicação híbrida.
 
 \begin{figure}[h]
 \caption{\small Arquiteturas de Botnet.}
 \centering
-\includegraphics[scale=0.25]{figs/topologias.png}
+\includegraphics[scale=0.5]{figs/topologias.png}
 \label{f.topologias}
 \legend{\small Fonte: \cite{imagembotnets}.}
 \end{figure}
@@ -27,7 +27,7 @@ As \textit{botnets} descentralizadas, por não possuírem uma estrutura central 
 
 Por outro lado, as \textit{botnets} centralizadas são muito mais confiáveis e eficientes na questão da comunicação, enquanto as P2P apresentam problemas de latência que acabam diminuindo o poder de seus ataques. Tendo isso em vista, as topologias centralizadas ainda são utilizadas pela sua facilidade de utilização e gerenciamento, além da baixa latência \cite{12d2f5d1eba245f7bc2acc7487941bd7}. Dentre estas, se destacam as que utilizam o protocolo IRC e HTTP.
 
-O Protocolo \textit{Internet Relay Chat} foi desenvolvido para ser utilizado em aplicações de trocas de mensagens em grupo \cite{oikarinen1993internet}. Ele é baseado num modelo de cliente-servidor, aonde um processo funciona como um ponto central, guardando o estado global de todos os outros clientes conectados a ele. Devido a um grande número de aplicações \textit{open-source} baseadas no protocolo IRC, sua implementação acaba sendo muito mais fácil, sendo esse o motivo pelo qual é o mais prevalente historicamente, e o motivo de ser o foco deste estudo. \cite{abu2006multifaceted}
+O Protocolo \textit{Internet Relay Chat} foi desenvolvido para ser utilizado em aplicações de trocas de mensagens em grupo \cite{oikarinen1993internet}. Ele é baseado num modelo de cliente-servidor, onde um processo funciona como um ponto central, guardando o estado global de todos os outros clientes conectados a ele. Devido a um grande número de aplicações \textit{open-source} baseadas no protocolo IRC, sua implementação acaba sendo muito mais fácil, sendo esse o motivo pelo qual é o mais prevalente historicamente, e o motivo de ser o foco deste estudo. \cite{abu2006multifaceted}
 
 O ciclo de vida de uma \textit{botnet}, segundo \cite{leonard2009framework}, pode ser descrito em quatro passos:
 
@@ -35,7 +35,7 @@ O ciclo de vida de uma \textit{botnet}, segundo \cite{leonard2009framework}, pod
     \item Infecção: nesta etapa, o \textit{botmaster} age infectando várias máquinas com \textit{malwares}, incorporando-as desta maneira à rede;
     \item Ambiente de Comando e Controle: depois de infectada, uma máquina estabele então uma conexão com o Servidor de C\&C, ficando à disposição do mestre para que quando ele desejar, possa enviar uma mensagem para o Servidor, e através deste a ordem é então repassada para todos os \textit{bots} conectados à sua rede;
     \item Ataque: depois que os \textit{bots} recebem as ordens, eles passam então a executar aquilo que foi determinado pela instrução enviada, como enviar \textit{e-mails} de \textit{spam}, por exemplo;
-    \item Pós-Ataque: depois que o ataque foi concluído, alguns \textit{bots} podem ser descobertos, levando a uma remoção do vírus e consequentemente, a remoção da máquina da \textit{botnet}. Sendo assim, o foco do mestre é executar a manutenção da rede, e por fim focar no recrutamento de novas máquinas, ponto aonde o ciclo recomeça.
+    \item Pós-Ataque: depois que o ataque foi concluído, alguns \textit{bots} podem ser descobertos, levando a uma remoção do vírus e consequentemente, a remoção da máquina da \textit{botnet}. Sendo assim, o foco do mestre é executar a manutenção da rede, e por fim focar no recrutamento de novas máquinas, ponto onde o ciclo recomeça.
 \end{itemize}
 
 Na área de detecção de botnets, têm se destacado muito por sua eficiência técnicas baseadas na mineração de dados, utilizando algoritmos de ML, como observado em \cite{feily2009survey}. A maioria destas técnicas de detecção costumam trabalhar com fluxos de redes, ao invés de pacotes isolados, devido ao fato dos primeiros apresentarem uma possibilidade muito maior de características a serem utilizadas \cite{beigi2014towards}. 
@@ -56,7 +56,7 @@ Dentro do contexto de algoritmos de ML supervisionados, que é o foco deste trab
 
 Problemas de Regressão são capazes de predizer variáveis quantitativas, ou seja, valores numéricos. Um exemplo seria encontrar o ganho anual de uma pessoa de acordo com a escolaridade, idade e local de residência. \cite{muller2017introduction} 
 
-Já para o caso onde tenta-se predizer uma variável qualitativa, ou seja, encontrar a qual classe $C_{n}$ pertence algo dado um conjunto de $n$ classes, têm-se um problema de Classificação. Para casos onde $n=2$, têm-se uma classificação binária, e quando $n>2$, uma classificação multi-classe.
+Já para o caso onde tenta-se predizer uma variável qualitativa, ou seja, encontrar a qual classe $C_{n}$ um certo item de entrada pertence, dado um conjunto de $n$ classes, têm-se um problema de Classificação. Para casos onde $n=2$, têm-se uma classificação binária, e quando $n>2$, uma classificação multi-classe.
 
 Já em métodos não-supervisionados, as classes dos dados não são passadas ao algoritmo, de maneira que ele busca identificar padrões e relações entre eles, procurando alguma informação possa ser obtida delas. 
 
@@ -71,13 +71,13 @@ Para que se obtenham esses conjuntos, uma prática comum é utilizar a técnica 
 Utilizando essa abordagem, espera-se observar que o modelo treinado seja generalizado, capaz de prever dados os quais nunca tenha trabalhado antes da maneira correta. No entanto, isto pode não ocorrer devido a:
 
 \begin{itemize}
-    \item Overfitting: ocorre quando o modelo fica muito sensível a certas particularidades do conjunto de treinamento. Isto costuma ocorrer em modelos mais complexos que utilizam um número muito grande de características.
-    \item Underfitting: ocorre quando o modelo, por ser muito simples, não é capaz de aprender as características dos dados, e dessa maneira falha em apresentar os resultados esperados. 
+    \item \textit{Overfitting}: ocorre quando o modelo fica muito sensível a certas particularidades do conjunto de treinamento. Isto costuma ocorrer em modelos mais complexos que utilizam um número muito grande de características.
+    \item \textit{Underfitting}: ocorre quando o modelo, por ser muito simples, não é capaz de aprender as características dos dados, e dessa maneira falha em apresentar os resultados esperados. 
 \end{itemize}
 
 O desafio na área de ML então é obter um modelo que esteja bem balanceado, não sendo nem muito simples nem muito complexo, de modo a evitar um dos problemas descritos acima. Para isto, podem-se utilizar várias técnicas, dentre elas se destacando o \textit{Cross Validation}, que buscam medir a generalização dos dados \cite{muller2017introduction}.
 
-A técnica de CV baseada em k-folds consiste em separar o conjunto de treinos em k subconjuntos de tamanhos iguais, aonde cada um será usado para treinar um modelo diferente . Estes modelos então são verificados alternando o conjunto de treino e utilizando os outros $k-1$ como teste, e a performance do algoritmo é obtida através da média das performances individuais. 
+A técnica de CV baseada em k-folds consiste em separar o conjunto de treinos em k subconjuntos de tamanhos iguais, onde cada um será usado para treinar um modelo diferente . Estes modelos então são verificados alternando o conjunto de treino e utilizando os outros $k-1$ como teste, e a performance do algoritmo é obtida através da média das performances individuais. 
 
 Algo importante de se notar também é a distribuição do número de amostras. De maneira geral, classificadores costumam ser muito mais efetivos quando trabalham com dados que se encontram balanceados, tendo sua efetividade diminuída caso contrário. \cite{yap2014application}
 
@@ -124,25 +124,19 @@ Dada uma classe c, e um conjunto de características $F = x_{1},x_{2},...,xn$, a
 \begin{equation}
 \label{e.bayes}
 P(c,F)=\frac{P(F|c)P(c)}{P(F)},
-\end{equation}
-
-e a suposição \textit{naive} de que todas as variáveis são independentes umas das outras implica que probabilidade de uma variável dado o valor da classe não depende do valor das outras variáveis do conjunto. Isso pode ser representado da seguinte forma:
+\end{equation} e a suposição \textit{naive} de que todas as variáveis são independentes umas das outras implica que probabilidade de uma variável dado o valor da classe não depende do valor das outras variáveis do conjunto. Isso pode ser representado da seguinte forma:
 
 \begin{equation}
 \label{e.naive}
 P(F,c)=P(x_{1},x_{2},...,x_{n}|c)=\Pi_{i=1}^n P(xi|y)
-\end{equation}
-
-ou seja, a probabilidade do conjunto F sobre c pode ser representada pelo produto das probabilidades individuais de cada característica $x_{i}$ do conjunto sobre uma classe.
+\end{equation} ou seja, a probabilidade do conjunto F sobre c pode ser representada pelo produto das probabilidades individuais de cada característica $x_{i}$ do conjunto sobre uma classe.
 
 Sendo assim, é possível obter uma equação para Naive Bayes como se segue:
 
 \begin{equation}
 \label{eq_final}
 r = arg max_{r}P(c)\Pi_{i=1}^n P(x_{i}|y)
-\end{equation}
-
-que mostra que o rótulo de uma entrada r será atribuído verificando para qual valor de classe c é obtido uma maior probabilidade com base no conjunto de características do problema.
+\end{equation} que mostra que o rótulo de uma entrada r será atribuído verificando para qual valor de classe c é obtido uma maior probabilidade com base no conjunto de características do problema.
 
 O que vai diferenciar os tipos de algoritmos de Naive Bayes é o modo como $ P(x_{i}|y)$ é calculado, ou seja, qual o tipo de distribuição que será usada. Estas podem ser Multinomial, Gaussiana ou Bernoulli \cite{Metsis06spamfiltering}. 
 
@@ -155,26 +149,20 @@ A ideia básica do SVM é encontrar um hiperplano ótimo que seja capaz de divid
 \begin{equation}
 \label{e.hyperplane}
 \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + ... = \beta_{n}x_{n} = 0
-\end{equation}
-
-aonde $x_{1},...,x_{n}$ representam as coordenadas de um certo ponto no ${\textrm I\!R}^{n}$ e $\beta_{1},...,\beta_{n}$ são constantes. 
+\end{equation} onde $x_{1},...,x_{n}$ representam as coordenadas de um certo ponto no ${\textrm I\!R}^{n}$ e $\beta_{1},...,\beta_{n}$ são constantes. 
 
 Considerando que para um ponto $x_{n}$ que obedeça a igualdade, este ponto está localizado exatamente acima do hiperplano, o objetivo do algoritmo então é que, dado um problema que possui dados de duas classes $c_{1}$ e $c_{2}$, todos os pontos de uma destas tenha o seguinte comportamento  
 
 \begin{equation}
 \label{e.hyperplane-div1}
 \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + ... = \beta_{n}x_{n} > 0
-\end{equation}
-
-enquanto para a outra classe seja observável que
+\end{equation} enquanto para a outra classe seja observável que
 
 \begin{equation}
 \label{e.hyperplane-div2}
 \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + ... = \beta_{n}x_{n} < 0
-\end{equation}
-
-ou seja, cada classe é encontrada somente em uma região, cada uma de um lado do hiperplano. Para definir a localização deste, busca-se um local onde a distância entre os pontos mais próximos do hiperplano de cada classe, neste contexto denominada margem, seja maximizado. Esta técnica é conhecida como \textit{Marginal Margins Classifier}
-\cite{James:2014:ISL:2517747} A figura \ref{f.hiperplano-svm} ilustra a ideia básica destes conceitos.
+\end{equation} ou seja, cada classe é encontrada somente em uma região, cada uma de um lado do hiperplano. Para definir a localização deste, busca-se um local onde a distância entre os pontos mais próximos do hiperplano de cada classe, neste contexto denominada margem, seja maximizado. Esta técnica é conhecida como \textit{Marginal Margins Classifier}
+\cite{James:2014:ISL:2517747} A Figura \ref{f.hiperplano-svm} ilustra a ideia básica destes conceitos.
 
 \begin{figure}[ht]
 \caption{\small Hiperplanos no conceito de SVM.}
@@ -186,7 +174,7 @@ ou seja, cada classe é encontrada somente em uma região, cada uma de um lado d
 
 No entanto, um caso de dados totalmente capaz de ser separado linearmente é muito raro de ser obtido em uma situação real. Tendo isso em vista, pode ser utilizada uma abordagem diferente, \textit{Soft Margins Classifier} aonde é permitido que pontos estejam localizados não só na região da margem, mas inclusive do lado errado do hiperplano. 
 
-Porém existem ainda os casos aonde os dados não possuem uma distribuição linear, e sendo assim não é possível estabeler um hiperplano entre as classes. Porém, estes dados podem ser separáveis em um espaço de maior dimensão, como demonstrado na próxima imagem \cite{kim2013everything}. 
+Porém existem ainda os casos aonde os dados não possuem uma distribuição linear, e sendo assim não é possível estabeler um hiperplano entre as classes. Porém, estes dados podem ser separáveis em um espaço de maior dimensão, como demonstrado na Figura \ref{f.svm-transformacao} \cite{kim2013everything}. 
 
 Depois de obtido o plano no espaço de maior dimensão, este pode ser projetado na dimensão anterior e assim se consegue um hiperplano divisor. Porém, o processo dessas transformações é muito caro computacionalmente, e neste contexto se faz útil a utilização do chamado \textit{Kernel Trick}.
 
@@ -200,9 +188,10 @@ Depois de obtido o plano no espaço de maior dimensão, este pode ser projetado 
 
 É possível observar através de comprovações matemáticas, que os resultados do algoritmo de SVM são obtidos através do produto escalar entre seus dados \cite{jordan2004kernel}. Neste contexto, são utilizadas as funções Kernel, que são capazes de calcular o produto escalar de dois vetores, representado por $<x,x'>$, no Rn em um espaço Rm, onde $m > n$, sendo assim capaz de calcular hiperplanos de maneira muito barata computacionalmente.
 
-As funções Kernel mais utilizadas neste contexto são mostradas na tabela \ref{t.kernels}.
+As funções Kernel mais utilizadas neste contexto são mostradas no Quadro \ref{t.kernels}.
 
-\begin{table}[h]
+\begin{quadro}[h]
+\caption{Funções Kernel utilizadas em SVM.}
 \centering
 \begin{tabular}{|c p{5cm}|l p{5cm}}
 \hline
@@ -212,19 +201,19 @@ As funções Kernel mais utilizadas neste contexto são mostradas na tabela \ref
 {\small Radial Basis Function} & {\small $\exp(-\gamma \parallel x - x' \parallel^{2})$}\\\hline
 {\small Sigmoidal} & {\small $\tanh(\gamma<x,x'> + r)$}\\\hline
 \end{tabular}
-\caption{Funções Kernel utilizadas em SVM.}
+\legend{\small Fonte: Elaborado pelo Autor.}
 \label{t.kernels}
-\end{table}
+\end{quadro}
 
 Uma grande desvantagem do SVM é que eles exigem que seus hiper-parâmetros sejam muito bem otimizados para que ele tenha um bom desempenho, assim exigindo um estudo maior para ser utilizado. 
 
-O Hiper-parâmetro C, constante de margens suaves, é comum a todos os Kernels e determina o peso da minimização dos erros no conjunto de treinamento. Além disso, como observado na tabela acima, alguns Kernels possuem valores específicos que devem ser determinados como $\gamma$, $r$ e $d$ (\textit{degree}) \cite{lorena2007introduccao}.
+O Hiper-parâmetro C, constante de margens suaves, é comum a todos os Kernels e determina o peso da minimização dos erros no conjunto de treinamento. Além disso, como observado na Tabela \ref{t.kernels}, alguns Kernels possuem valores específicos que devem ser determinados como $\gamma$, $r$ e $d$ (\textit{degree}) \cite{lorena2007introduccao}.
 
 \subsubsection{Árvores de Decisão}
 
 Árvores de decisão, no contexto de ML, são métodos que se assemelham muito a fluxogramas, pois busca através de perguntas do tipo \textit{if-else} encontrar um certo resultado \cite{harrington2012machine}.
 
-Para definir os testes e divisões feitos, as árvores de decisão trabalham com uma abordagem denominada \textit{splitting}, onde de maneira recursiva as os dados são divididos em regiões menores, de modo que eles fiquem de maneira mais dividida possível.
+Para definir os testes e divisões, as árvores de decisão trabalham com uma abordagem denominada \textit{splitting}, onde de maneira recursiva os dados são divididos em regiões menores, de modo que eles fiquem de maneira mais dividida possível.
 
 Uma árvore de decisão possui três tipos de nós:
 
@@ -234,7 +223,7 @@ Uma árvore de decisão possui três tipos de nós:
     \item Nós folha: são os nós presentes no final da árvore. Eles indicam qual a classe que o algoritmo foi capaz de prever
 \end{itemize}
 
-Primeiramente, o algoritmo busca uma característica inicial para iniciar as divisões e ser o nó raíz, que no caso é a que pode dividir da melhor maneira possível o conjunto de dados de modo que as classes fiquem bem separadas, podendo inclusive dividir em mais do que duas regiões. Após a divisão, são adicionados nós de teste à árvore, e novas características são selecionadas para a divisão do próximo passo. A figura a seguir mostra o exemplo de uma árvore de decisão, baseada no conjunto de dados de flores iris.
+Primeiramente, o algoritmo busca uma característica inicial para iniciar as divisões e ser o nó raíz, que no caso é a que pode dividir da melhor maneira possível o conjunto de dados de modo que as classes fiquem bem separadas, podendo inclusive dividir em mais do que duas regiões. Após a divisão, são adicionados nós de teste à árvore, e novas características são selecionadas para a divisão do próximo passo. A Figura \ref{f.arvore-iris} mostra o exemplo de uma árvore de decisão, baseada no conjunto de dados de flores iris.
 
 \begin{figure}[h]
 \caption{\small Exemplo de Árvore de Decisão.}
@@ -246,7 +235,7 @@ Primeiramente, o algoritmo busca uma característica inicial para iniciar as div
 
 Existem duas condições de parada para o algoritmos: as características possíveis para o problema se esgotarem, ou até que todas as instâncias das sub-regiões sejam pertencentes a uma mesma classe. \cite{James:2014:ISL:2517747}
 
-Apesar deste método ser bem vantajoso por ser facilmente entendível e interpretável, infelizmente não são muito robustos por ser muito suscetível a perdas de precisão causadas por pequenas mudanças nas características, além de serem mais suscetíveis a \textit{overfitting}. 
+Apesar deste método ser bem vantajoso por ser facilmente entendível e interpretável, infelizmente não são muito robustos por serem muito suscetíveis a perdas de precisão causadas por pequenas mudanças nas características, além de serem mais suscetíveis a \textit{overfitting}. 
 
 \subsubsection{Florestas Aleatórias}
 
@@ -255,7 +244,7 @@ Florestas aleatórias é um método baseado em Árvores de Decisão. O algoritmo
 Este procedimento é muito eficiente, pois ao fazer com que as árvores sejam criadas com um número reduzido de características, elimina-se a possibilidade de que uma que seja muito mais forte do que as outras influencie tanto no resultado, de maneira que as árvores geradas sejam bem diferentes umas das outras e possuam um valor de variância mais alto entre elas. \cite{Breiman2001} 
 
 Ao fim deste processo, as predições são feitas através de um sistema de votação. Os dados são passados por todas as árvores da floresta onde cada uma irá predizer uma classe, e enfim os votos serão contados e o resultado será definido pela classe com maior número de predições. 
-Tomando como exemplo o caso de um sistema de classificação, que foi treinado por uma Floresta Aleatória de 100 árvores para separar suas entradas em duas classes X e Y. Cada entrada teria suas características processadas por todas as árvores e suas respectivas saídas obtidas. No caso de terem sido obtidos 60 predições de classe X e 40 predições de classe Y, essa entrada seria classificada como pertencente à classe X.
+Tomando como exemplo o caso de um sistema de classificação, que foi treinado por uma Floresta Aleatória de 100 árvores para separar suas entradas em duas classes X e Y. Cada entrada teria suas características processadas por todas as árvores e suas respectivas saídas obtidas. No caso de terem sido obtidos 60 predições de classe X e 40 predições de classe Y, essa entrada seria classificada como pertencente à classe X. A Figura \ref{f.random-forest} ilustra o funcionamento das Florestas Aleatórias.
 
 \begin{figure}[h]
 \caption{\small Funcionamento de Florestas Aleatórias.}
@@ -269,11 +258,11 @@ Tomando como exemplo o caso de um sistema de classificação, que foi treinado p
 
 AdaBoost, abreviação de \textit{Adaptive Boosting}, é um algoritmo formulado por \cite{FREUND1997119}, que busca melhorar a performance de outros classificadores. No contexto desse trabalho, será abordado a utilização deste algoritmo em conjunto com Árvores de Decisão.
 
-O AdaBoost possui semelhanças com o algoritmo de Florestas Aleatórias, visto que ele busca trabalhar com um conjunto de classificadores de forma a obter um resultado mais confiável, porém se diferencia ao obter no final um modelo ao invés do modelo de votação anterior.
+O AdaBoost possui semelhanças com o algoritmo de Florestas Aleatórias, visto que ele busca trabalhar com um conjunto de classificadores de forma a obter um resultado mais confiável, porém se diferencia ao obter no final de seu processo, um modelo ao invés de utilizar a abordagem de votação.
 
-O algoritmo funciona mantendo um valor de peso $w_{i}$ para cada dado do conjunto de treino passado para o algoritmo. Depois, são feitas várias iterações aonde em cada uma é gerado um novo classificador fraco, que é o nome dado a um modelo que possui uma performance minimamente maior comparado a um algoritmo totalmente randômico, que possui acurácia próxima de 50 por cento.
+O algoritmo funciona mantendo um valor de peso $w_{i}$ para cada dado do conjunto de treino passado para o algoritmo. Depois, são feitas várias iterações onde em cada uma é gerado um novo classificador fraco, que é o nome dado a um modelo que possui uma performance minimamente maior comparado a um algoritmo totalmente randômico, que possui acurácia próxima de 50 por cento.
 
-É feita então uma predição com base neste algoritmo, e os pesos das variáveis são atualizados de acordo com o valor obtido pelo classificador, de maneira que se um dado foi classificado de maneira correta, seu peso diminui, e seu peso aumenta em caso contrário \cite{rojas2009adaboost}. Depois disso, o subconjunto utilizado pelo próximo classificador fraco é escolhido com base nos valores dos pesos.
+É feita então uma predição com base neste algoritmo, e os pesos das variáveis são atualizados de acordo com o valor obtido pelo classificador, de maneira que se um dado foi classificado de maneira correta, seu peso diminui, e seu peso aumenta em caso contrário \cite{rojas2009adaboost}. Depois disso, o subconjunto utilizado pelo próximo classificador fraco é escolhido com base nos valores dos pesos. A Figura \ref{f.adaboost} ilustra o processo do algoritmo de AdaBoost.
 
 \begin{figure}[h]
 \caption{\small Funcionamento do AdaBoost.}
@@ -295,9 +284,10 @@ Ao final da execução, o algoritmo seleciona as $n$ características mais bem c
 
 \section{Revisão Bibliográfica}
 
-Como base para este estudo, foram utilizados principalmente dois artigos. O primeiro, \textit{Machine learning for identifying botnet network traffic} \cite{12d2f5d1eba245f7bc2acc7487941bd7}, faz um estudo comparativo entre vários estudos da área, separando-os de acordo com tipo de ML e protocolo estudado, e depois apresentando características de cada um. Desse estudo, foram obtidos os seguintes artigos como base:
+Como base para este estudo, foram utilizados alguns artigos. O primeiro, \textit{Machine learning for identifying botnet network traffic} \cite{12d2f5d1eba245f7bc2acc7487941bd7}, faz um estudo comparativo entre vários estudos da área, separando-os de acordo com tipo de ML e protocolo estudado, e depois apresentando características de cada um. Desse estudo, foram obtidos os seguintes artigos como base:
 
-\begin{table}[h]
+\begin{quadro}[h]
+\caption{Estudos da área utilizados como base para escolha dos classificadores.}
 \centering
 \begin{tabular}{|p{4cm}|p{5cm}|p{3cm}|}
 \hline
@@ -308,11 +298,11 @@ Redes Bayesianas} & {\small 10}\\\hline
 {\small \cite{strayer2008botnet}} & {\small Árvores de Decisão, Naive Bayes, Redes Bayesianas} & {\small 16}\\\hline
 {\small \cite{masud2008flow}} & {\small Árvores de Decisão, Naive Bayes, Redes Bayesianas, SVM, Árvores de Decisão com Boosting} & {\small 20}\\\hline
 \end{tabular}
-\caption{Estudos da área utilizados como base para escolha dos classificadores.}
+\legend{Fonte: Elaborado pelo Autor.}
 \label{t.articles}
-\end{table}
+\end{quadro}
 
-De acordo com essa tabela, foram obtidos os estimadores e características base deste trabalho, com algumas ressalvas. Nota-se que Redes Bayesianas se fazem presente em todos eles, no entanto as bibliotecas deste trabalho não possuem implementação deste algoritmo. Portanto, Florestas Aleatórias foi incluído como substituto, por também ter sido utilizado em estudos relacionados \cite{rna2}. 
+De acordo com o Quadro \ref{t.articles}, foram obtidos os estimadores e características base deste trabalho, com algumas ressalvas. Nota-se que Redes Bayesianas se fazem presente em todos eles, no entanto as bibliotecas deste trabalho não possuem implementação deste algoritmo. Portanto, Florestas Aleatórias foi incluído como substituto, por também ter sido utilizado em estudos relacionados \cite{rna2}. 
 
 Além disso, como não foi especificado nos trabalho quais técnicas de \textit{Boosted Decision Trees} e Naive Bayes foram utilizadas, optou-se pelo uso do AdaBoost e pelo teste de Naive Bayes Multinomial e Bernoulli, respectivamente.
 

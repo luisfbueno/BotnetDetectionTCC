@@ -6,8 +6,8 @@
 	% -- opções da classe memoir --
 	12pt,				% tamanho da fonte
 	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
-	oneside,			% para impressão em verso e anverso. Oposto a oneside
-	a4paper,			% tamanho do papel. 
+	oneside,			% para impressão em verso e anverso. Oposto a twoside
+	a4paper,			% tamanho do papel.
 	% -- opções da classe abntex2 --
 	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
 	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
@@ -18,14 +18,14 @@
 	french,				% idioma adicional para hifenização
 	spanish,			% idioma adicional para hifenização
 	brazil,				% o último idioma é o principal do documento
-	]{abntex2}
+	]{lib/abntex2}
+
 
 % --------------------------------------------------------
 % PACOTES
 % --------------------------------------------------------
-
 \usepackage{cmap}				% Mapear caracteres especiais no PDF
-\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage{lmodern}			% Usa a fonte Latin Modern
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
 \usepackage{lastpage}			% Usado pela Ficha catalográfica
@@ -33,12 +33,21 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{lipsum}				% para geração de dummy text
+
+\let\printglossary\relax
+\let\theglossary\relax
+\let\endtheglossary\relax
+\usepackage{lib/updateAbntex}
+
 \usepackage[brazilian,hyperpageref]{}	 % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
-\usepackage[br]{nicealgo}       % Pacote para criação de algoritmos
-\usepackage{customizacoes}      % Pacote de customizações do abntex2
+\usepackage{microtype} 
 
-
+\usepackage{silence}
+%Disable all warnings issued by latex starting with "You have..."
+\WarningFilter{latex}{You have requested package}
+\usepackage[alf, abnt-etal-list=0 ]{lib/abntex2cite}	% Citações padrão ABNT
+\usepackage[br]{lib/nicealgo}       % Pacote para criação de algoritmos
+\usepackage{lib/customizacoes}      % Pacote de customizações do abntex2
 % --------------------------------------------------------
 % CONFIGURAÇÕES DE PACOTES
 % --------------------------------------------------------
@@ -51,13 +60,13 @@
 % \renewcommand{\backref}{}
 % Define os textos da citação
 % \renewcommand*{\backrefalt}[4]{
-	% \ifcase #1 %
-		% Nenhuma citação no texto.%
-	% \or
-		% Citado na página #2.%
-	% \else
-		% Citado #1 vezes nas páginas #2.%
-	% \fi}%
+% 	\ifcase #1 %
+% 		Nenhuma citação no texto.%
+% 	\or
+% 		Citado na página #2.%
+% 	\else
+% 		Citado #1 vezes nas páginas #2.%
+% 	\fi}%
 
 
 % --------------------------------------------------------
@@ -79,6 +88,7 @@
 \preambulo{Trabalho de Conclusão de Curso do Curso de Ciência da Computação da Universidade Estadual Paulista ``Júlio de Mesquita Filho'', Faculdade de Ciências, Campus Bauru.}
 
 
+
 % --------------------------------------------------------
 % CONFIGURAÇÕES PARA O PDF FINAL
 % --------------------------------------------------------
@@ -90,11 +100,11 @@
 \makeatletter
 \hypersetup{
      	%pagebackref=true,
-		pdftitle={\@title}, 
+		pdftitle={\@title},
 		pdfauthor={\@author},
     	pdfsubject={\imprimirpreambulo},
 	    pdfcreator={LaTeX with abnTeX2},
-		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
 		colorlinks=true,       		% false: boxed links; true: colored links
     	linkcolor=blue,          	% color of internal links
     	citecolor=blue,        		% color of links to bibliography
@@ -103,6 +113,35 @@
 		bookmarksdepth=4
 }
 \makeatother
+
+
+% ---
+% Posiciona figuras e tabelas no topo da página quando adicionadas sozinhas
+% em um página em branco. Ver https://github.com/abntex/abntex2/issues/170
+\makeatletter
+\setlength{\@fptop}{5pt} % Set distance from top of page to first float
+\makeatother
+% ---
+
+% ---
+% Possibilita criação de Quadros e Lista de quadros.
+% Ver https://github.com/abntex/abntex2/issues/176
+%
+\newcommand{\quadroname}{Quadro}
+\newcommand{\listofquadrosname}{Lista de quadros}
+
+\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{\listofquadrosname}
+\newlistentry{quadro}{loq}{0}
+
+% configurações para atender às regras da ABNT
+\setfloatadjustment{quadro}{\centering}
+\counterwithout{quadro}{chapter}
+\renewcommand{\cftquadroname}{\quadroname\space} 
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+
+\setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
+% ---
 
 
 % --------------------------------------------------------
@@ -118,11 +157,20 @@
 
 % --------------------------------------------------------
 % COMPILANDO O ÍNDICE
-% --------------------------------------------------------
-
+% ---------------------------------------------------
 \makeindex
-
-
+% ---
+ 
+% ---
+% GLOSSARIO
+% ---
+\makeglossaries
+% ---
+% Exemplo de configurações do glossairo
+\renewcommand*{\glsseeformat}[3][\seename]{\textit{#1}  
+ \glsseelist{#2}}
+% ---
+ 
 % --------------------------------------------------------
 % INÍCIO DO DOCUMENTO
 % --------------------------------------------------------
@@ -133,7 +181,7 @@
 \selectlanguage{brazil}
 
 % Retira espaço extra obsoleto entre as frases.
-\frenchspacing 
+\frenchspacing
 
 
 % --------------------------------------------------------
@@ -187,40 +235,34 @@
     \vspace*{\fill}
    \end{center}
    \center Banca Examinadora
-   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
-   \assinatura{\textbf{Profª. Drª. Simone das Graças Domingues Prado} \\ Convidado 1}
-   \assinatura{\textbf{Professor} \\ Convidado 2}
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador\\
+   Universidade Estadual Paulista "Júlio de Mesquita Filho"\\
+   Faculdade de Ciências \\
+   Departamento de Ciência da Computação}
+   \assinatura{\textbf{Profª. Drª. Simone das Graças Domingues Prado} \\
+   Universidade Estadual Paulista "Júlio de Mesquita Filho"\\
+   Faculdade de Ciências \\
+   Departamento de Ciência da Computação}
+   \assinatura{\textbf{Prof. Associado José Remo Ferreira Brega} \\
+   Universidade Estadual Paulista "Júlio de Mesquita Filho"\\
+   Faculdade de Ciências \\
+   Departamento de Ciência da Computação}
    \begin{center}
     \vspace*{0.5cm}
     \par
-    {Bauru, \_\_\_\_\_ de \_\_\_\_\_\_\_\_\_\_\_ de \_\_\_\_.}
+    {Bauru, 13 de Novembro de 2018.}
     \vspace*{1cm}
   \end{center}
 \end{folhadeaprovacao}
 
-% % Dedicatória
-% \begin{dedicatoria}
-%   \vspace*{\fill}
-%   \centering
-%   \noindent
-%   \textit{Espaço destinado à dedicátoria do texto.} \vspace*{\fill}
-% \end{dedicatoria}
+% Dedicatória
+% \input{text/pre-text/dedicatoria.tex}
 
 % Agradecimentos
-\begin{agradecimentos}
-
-Espaço reservado para agradecimentos.
-
-\end{agradecimentos}
+\input{text/pre-text/agradecimento.tex}
 
 % Epígrafe
-\begin{epigrafe}
-    \vspace*{\fill}
-	\begin{flushright}
-		"The ending isn’t any more important \linebreak \rightline{than any of the moments leading to it}" \newline 
-		(To the Moon) 
-	\end{flushright}
-\end{epigrafe}
+\input{text/pre-text/epigrafe.tex}
 
 
 % --------------------------------------------------------
@@ -229,18 +271,10 @@ Espaço reservado para agradecimentos.
 
 % resumo em português
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
-\begin{resumo}
-Esta monografia busca apresentar o estudo de métodos da área de \textit{Machine Learning} aplicados para a área de detecção de Botnets, redes de computadores comprometidos que são controlados por um invasor com o fim de executar atividades como ataques \textit{DDoS}, roubos de dados, entre outras ações maliciosas. Este trabalho é focado em estudar a eficiências dos classificadores mais utilizados em estudos anteriores da área, utilizando as técnicas de \textit{Naive Bayes}, \textit{Support Vector Machines}, Árvores de Decisão, Florestas Aleatórias, \textit{AdaBoost}, e aplicar técnicas para seleção de características de rede mais relevantes na tarefa de seleção dos tráfegos de Botnet em um ambiente de rede, através de uma abordagem de força bruta e uma abordagem utilizando o algoritmo de seleção de características \textit{Recursive Feature Elimination}. Busca também estudar a relevância de técnicas de otimização de hiper-parâmetros dos estimadores, com o objetivo de aumentar a acurácia. Por fim, são tiradas conclusões com base nos resultados obtidos no estudo. \linebreak
-\textbf{Palavras-chave:} Botnet, Machine Learning, Inteligência Artificial, Python.
-\end{resumo}
+\input{text/pre-text/resumoPT.tex}
 
 % resumo em inglês
-\begin{resumo}[Abstract]
- \begin{otherlanguage*}{english}
-This monograph presents the study of Machine Learning methods applied to the detection of Botnets, compromised computer networks that are controlled by an attacker in order to perform malicious activities such as DDoS attacks, data theft, among others. This work is focused on studying the efficiency of the most used classifiers in previous studies of the aream with the application of Naive Bayes, Support Vector Machines, Decision Trees, Random Forests and AdaBoost models, and apply techniques to select the most relevant network characteristics in the task of selecting botnet traffic in a network environment, through a brute-force approach and using the Recursive Feature Elimination algorithm. It also seeks to study the relevance of optimization techniques on estimators hyper-parameters, in order to increase model accuracy. Finally, conclusions are drawn based on the results obtained in the study. \linebreak
-\textbf{Keywords:} Botnet, Machine Learning, Artificial Intelligence, Python.
- \end{otherlanguage*}
-\end{resumo}
+\input{text/pre-text/resumoEN.tex}
 
 
 % --------------------------------------------------------
@@ -252,6 +286,14 @@ This monograph presents the study of Machine Learning methods applied to the det
 \listoffigures*
 \cleardoublepage
 
+
+% ---
+% inserir lista de quadros
+% ---
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage
+% ---
 
 % --------------------------------------------------------
 % LISTA DE TABELAS
@@ -296,7 +338,6 @@ This monograph presents the study of Machine Learning methods applied to the det
   \item[$ \gamma $] Letra grega Gama
 \end{simbolos}
 
-
 % --------------------------------------------------------
 % SUMÁRIO
 % --------------------------------------------------------
@@ -314,12 +355,13 @@ This monograph presents the study of Machine Learning methods applied to the det
 \pagestyle{simple}
 
 % Arquivos .tex do texto, podendo ser escritos em um único arquivo ou divididos da forma desejada
-\input{introducao.tex}
-\input{fundamentacao.tex}
-\input{metodologia.tex}
-\input{desenvolvimento.tex}
-\input{resultados.tex}
-\input{conclusao.tex}
+\input{text/chapters/introducao.tex}
+\input{text/chapters/fundamentacao.tex}
+\input{text/chapters/metodologia.tex}
+\input{text/chapters/desenvolvimento.tex}
+\input{text/chapters/resultados.tex}
+\input{text/chapters/conclusao.tex}
+
 % --------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
 % --------------------------------------------------------
@@ -331,7 +373,7 @@ This monograph presents the study of Machine Learning methods applied to the det
 % REFERÊNCIAS BIBLIOGRÁFICAS
 % --------------------------------------------------------
 
-\bibliography{referencias}
+\bibliography{text/chapters/referencias}
 
 
 % --------------------------------------------------------
